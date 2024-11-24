@@ -1,0 +1,7 @@
+{
+  "name": "BananaUI",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
