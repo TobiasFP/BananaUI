@@ -32,21 +32,25 @@ const routes: Routes = [
     path: 'bots',
     loadChildren: () =>
       import('./pages/bots/bots.module').then((m) => m.BotsPageModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'maps',
     loadChildren: () =>
       import('./pages/maps/maps.module').then((m) => m.MapsPageModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'tasks',
     loadChildren: () =>
       import('./pages/tasks/tasks.module').then((m) => m.TasksPageModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'options',
     loadChildren: () =>
       import('./pages/options/options.module').then((m) => m.OptionsPageModule),
+    canLoad: [AuthGuard],
   },
 ];
 

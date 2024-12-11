@@ -1,13 +1,38 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>bots</ion-title>
+    <ion-title>Bots</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">bots</ion-title>
+      <ion-title size="large">home</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-grid>
+    <ion-row class="row-header">
+      <ion-col size="2">Serial Number </ion-col>
+      <ion-col size="2"> Manufacturer </ion-col>
+      <ion-col size="2"> Map </ion-col>
+      <ion-col size="2"> Battery </ion-col>
+      <ion-col size="2"> State </ion-col>
+      <ion-col size="2"> Paused </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let amr of amrs">
+      <ion-col size="2">{{ amr.serialNumber }}</ion-col>
+      <ion-col size="2">{{ amr.manufacturer }} </ion-col>
+      <ion-col size="2"> {{ amr.agvPosition.mapDescription }} </ion-col>
+      <ion-col size="2">{{ amr.batteryState.batteryCharge }}% </ion-col>
+      <ion-col size="2"
+        ><p *ngIf="amr.safetyState.eStop !== ''">E-STOP</p>
+        <p *ngIf="amr.safetyState.eStop === ''">
+          {{ amr.operatingMode ? amr.errors : "" }}
+        </p></ion-col
+      >
+      <ion-col size="2">{{ amr.paused }}</ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

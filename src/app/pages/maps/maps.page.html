@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>maps</ion-title>
+    <ion-title>Maps</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,4 +10,38 @@
       <ion-title size="large">maps</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title> Maps and overview </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col offset="8" size="4">
+            <ion-select
+              interface="popover"
+              (ionChange)="mapChange()"
+              label="Select map to view"
+              placeholder="Map"
+            >
+              <ion-select-option *ngFor="let map of maps" [value]="map.ID">
+                {{ map.mapDescription }}
+              </ion-select-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+    <ion-card *ngIf="pgmbuffer">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <app-map [amrs]="amrs" [mapPgmbuffer]="pgmbuffer"></app-map>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </ion-card>
 </ion-content>

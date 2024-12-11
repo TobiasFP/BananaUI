@@ -12,7 +12,7 @@ import { Observable, from } from 'rxjs';
 import { tap, switchMap } from 'rxjs/operators';
 @Injectable()
 export class HttpTokenInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -20,9 +20,6 @@ export class HttpTokenInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return from(this.authService.getToken()).pipe(
       switchMap((token) => {
-        if (!request.url.startsWith('https://gateway.saxobank.com')) {
-          return next.handle(request);
-        }
         if (token) {
           const clonedreq = request.clone({
             headers: request.headers.set('Authorization', `Bearer ${token}`),
@@ -32,7 +29,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
         } else {
           return next.handle(request).pipe(
             tap(
-              () => { },
+              () => {},
               (err: any) => {
                 if (err instanceof HttpErrorResponse) {
                   if (err.status !== 401) {

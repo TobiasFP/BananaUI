@@ -32,9 +32,13 @@ export class AuthService {
   get userIsAuthenticated(): Promise<Boolean> {
     return this.getAuthData().then(
       (data) => {
-        if (data?.token) {
-          return true;
+        const epochTime = Math.floor( new Date().getTime() / 1000);
+        if (data?.expires < epochTime) {
+            return false;
         }
+          if (data?.token) {
+            return true;
+          }
         return false;
       },
       () => {
