@@ -52,6 +52,10 @@ const routes: Routes = [
       import('./pages/options/options.module').then((m) => m.OptionsPageModule),
     canLoad: [AuthGuard],
   },
+  {
+    path: 'amrinfo/:serialnumber',
+    loadChildren: () => import('./pages/amrinfo/amrinfo.module').then( m => m.AmrinfoPageModule)
+  },
 ];
 
 @NgModule({

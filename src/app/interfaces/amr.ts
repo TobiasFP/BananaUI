@@ -1,4 +1,16 @@
-import { AmrMap } from "./map";
+import { AmrMap } from './map';
+
+export enum errorLevel {
+  WARNING = 'WARNING',
+  FATAL = 'FATAL',
+}
+export interface stateError {
+  errorType: string;
+  errorLevel: errorLevel;
+  errorReferences: string;
+  errorDescription: string;
+  errorHint: string;
+}
 
 export interface State {
   ID: number;
@@ -20,7 +32,7 @@ export interface State {
   actionStates: any;
   batteryState: BatteryState;
   operatingMode: string;
-  errors: any;
+  errors: stateError;
   safetyState: SafetyState;
   maps: AmrMap;
   zoneSetId: string;
@@ -31,6 +43,49 @@ export interface State {
   velocity: Velocity;
   loads: any;
   information: any;
+}
+
+export enum operatingMode {
+  AUTOMATIC = 'AUTOMATIC',
+  SEMIAUTOMATIC = 'SEMIAUTOMATIC',
+  MANUAL = 'MANUAL',
+  SERVICE = 'SERVICE',
+  TEACHIN = 'TEACHIN',
+}
+
+// Returns red if no connection or in estop
+// Returns yellow if other problems, or if we have not heard from the robot
+// in 1 minute or more
+export function getAmrState(amr: State): string {
+  // Look for the timestamps
+  // YYYY-MM-DDTHH:mm:ss.ffZ
+  // from topic "connection": https://github.com/VDA5050/VDA5050/blob/main/VDA5050_EN.md
+  const lastMessageReceivedTimestamp = Date.parse(amr.timestamp);
+  const now = Date.now();
+  if (lastMessageReceivedTimestamp + 60000 < now) {
+    return 'danger';
+  } else if (lastMessageReceivedTimestamp + 30000 < now) {
+    return 'warning';
+  }
+
+  if (
+    amr.safetyState.eStop !== '' ||
+    amr.errors?.errorLevel === errorLevel.FATAL
+  ) {
+    // Look at the logs and data
+    return 'danger';
+  }
+
+  if (
+    amr.operatingMode === operatingMode.MANUAL ||
+    amr.operatingMode === operatingMode.SEMIAUTOMATIC ||
+    amr.operatingMode === operatingMode.SERVICE ||
+    amr.operatingMode === operatingMode.TEACHIN ||
+    amr.errors?.errorLevel === errorLevel.WARNING
+  ) {
+    return 'warning';
+  }
+  return '';
 }
 
 export interface BatteryState {

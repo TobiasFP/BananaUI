@@ -1,5 +1,5 @@
 import { environment } from 'src/environments/environment';
-import { State } from '../interfaces/amr';
+import { getAmrState, State } from '../interfaces/amr';
 
 export enum ImageNames {
   Map = 'map',
@@ -61,6 +61,9 @@ export default class PhaserScene extends Phaser.Scene {
     this.amrs.forEach((amr) => {
       if (amr.gameObject) {
         amr.gameObject.x = amr.agvPosition.x;
+        if (getAmrState(amr) == 'danger') amr.gameObject.alpha = 0.2;
+        else if (getAmrState(amr) == 'warning') amr.gameObject.alpha = 0.5;
+        else amr.gameObject.alpha = 1;
       } else {
         this.initiateAmrGameObject(amr);
       }

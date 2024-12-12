@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { State } from 'src/app/interfaces/amr';
-import { OverviewService } from 'src/app/services/overview.service';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +8,9 @@ import { OverviewService } from 'src/app/services/overview.service';
 })
 export class HomePage implements OnInit {
   amrs: State[] = [];
-  constructor(public overviewService: OverviewService) {}
+  constructor() {}
 
   ngOnInit() {
-    this.overviewService.amrs().subscribe((amrs) => {
-      this.amrs = amrs.data;
-    });
+     
   }
 }

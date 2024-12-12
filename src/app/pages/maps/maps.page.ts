@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { AmrMap } from 'src/app/interfaces/map';
 import { MapsService } from 'src/app/services/maps.service';
 import { PpmImage } from '@cs101/ppm-converter';
@@ -9,11 +9,11 @@ import { State } from 'src/app/interfaces/amr';
   templateUrl: './maps.page.html',
   styleUrls: ['./maps.page.scss'],
 })
-export class MapsPage implements OnInit {
+export class MapsPage implements OnInit, OnDestroy {
   amrs: State[] = [];
   maps: AmrMap[] = [];
   pgmbuffer!: Uint8Array;
-
+  getAmrsInterval!: any;
   constructor(
     public mapsService: MapsService,
     public overviewService: OverviewService,
@@ -26,10 +26,14 @@ export class MapsPage implements OnInit {
       await this.mapChange();
       this.changeDetection.detectChanges();
     });
-    setInterval(async () => {
+    this.getAmrsInterval = setInterval(async () => {
       await this.getAmrs();
       this.changeDetection.detectChanges();
     }, 2000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.getAmrsInterval);
   }
 
   async getAmrs() {

@@ -21,17 +21,22 @@
       <ion-col size="2"> Paused </ion-col>
     </ion-row>
 
-    <ion-row *ngFor="let amr of amrs">
+    <ion-row *ngFor="let amr of amrs" (click)="goToAmr(amr.serialNumber)">
       <ion-col size="2">{{ amr.serialNumber }}</ion-col>
       <ion-col size="2">{{ amr.manufacturer }} </ion-col>
       <ion-col size="2"> {{ amr.agvPosition.mapDescription }} </ion-col>
       <ion-col size="2">{{ amr.batteryState.batteryCharge }}% </ion-col>
-      <ion-col size="2"
-        ><p *ngIf="amr.safetyState.eStop !== ''">E-STOP</p>
+      <ion-col size="2">
+        <ion-icon
+          size="large"
+          [color]="getStateOfAmr(amr)"
+          name="wifi-outline"
+        ></ion-icon>
+        <p *ngIf="amr.safetyState.eStop !== ''">E-STOP</p>
         <p *ngIf="amr.safetyState.eStop === ''">
           {{ amr.operatingMode ? amr.errors : "" }}
-        </p></ion-col
-      >
+        </p>
+      </ion-col>
       <ion-col size="2">{{ amr.paused }}</ion-col>
     </ion-row>
   </ion-grid>
