@@ -1,0 +1,72 @@
+<pre>
+  {{ nodes | json }}
+</pre>
+
+<ion-list>
+  <ion-item>
+    <ion-input
+      [disabled]="true"
+      [(ngModel)]="nodeToPost.nodeId"
+      label="Node ID"
+    >
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input
+      [(ngModel)]="nodeToPost.nodeDescription"
+      label="Node description"
+    >
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input type="number" [(ngModel)]="nodeToPost.nodePosition.x" label="x">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="number" [(ngModel)]="nodeToPost.nodePosition.y" label="y">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input
+      [disabled]="true"
+      [(ngModel)]="nodeToPost.nodePosition.mapId"
+      label="mapId"
+    >
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input
+      type="number"
+      [(ngModel)]="nodeToPost.nodePosition.theta"
+      label="theta"
+    >
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input
+      type="number"
+      [(ngModel)]="nodeToPost.nodePosition.allowedDeviationXY"
+      label="allowedDeviationXY"
+    >
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input
+      type="number"
+      [(ngModel)]="nodeToPost.nodePosition.allowedDeviationTheta"
+      label="allowedDeviationTheta"
+    >
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input
+      [(ngModel)]="nodeToPost.nodePosition.mapDescription"
+      label="mapDescription"
+    >
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-button (click)="addNode()"> Add a node</ion-button>
+  </ion-item>
+</ion-list>

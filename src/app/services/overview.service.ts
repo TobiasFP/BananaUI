@@ -15,7 +15,7 @@ export class OverviewService {
   }
   public amrs(): Observable<dataExchange<Array<State>>> {
     return this.http.get<dataExchange<Array<State>>>(
-      environment.apiurl + 'api/amrs/'
+      environment.apiurl + 'api/amrs/all'
     );
   }
   public amr(serialNumber: string): Observable<dataExchange<State>> {
