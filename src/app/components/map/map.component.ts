@@ -6,6 +6,8 @@ import {
   Input,
   SimpleChanges,
   OnChanges,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { PpmImage } from '@cs101/ppm-converter';
 import * as Phaser from 'phaser';
@@ -13,6 +15,10 @@ import { State } from 'src/app/interfaces/amr';
 import PhaserScene, { phaserAmr } from 'src/app/components/map';
 import { pgmP5Tools } from './pgmP5Tools';
 
+export interface selectedLocation {
+  x: number;
+  y: number;
+}
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -23,6 +29,16 @@ export class MapComponent implements AfterViewInit, OnChanges {
   metersToAPixel: number = 0.05;
   mapSizeX: number = 0;
   mapSizeY: number = 0;
+
+  @Input()
+  selectLocation: boolean = true;
+  @Input()
+  selectedIcon: string = '';
+
+  selectedIconImage!: Phaser.GameObjects.Image;
+
+  @Output() selectedLocations: EventEmitter<selectedLocation> =
+    new EventEmitter();
 
   @Input()
   mapPgmbuffer!: Uint8Array;
@@ -65,10 +81,16 @@ export class MapComponent implements AfterViewInit, OnChanges {
       scene: [this.phaserMapScene],
     };
     this.game = new Phaser.Game(config);
+    if (this.selectLocation) {
+      setTimeout(() => {
+        this.phaserMapScene.input.on('pointerup', this.pointerclick.bind(this));
+      }, 200);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.phaserMapScene) {
+      // if we only want to select location, we do not want this map to display amrs.
       const amrs = changes['amrs'].currentValue as Array<State>;
       amrs.forEach((amr) => {
         const currentSceneAmr = this.phaserMapScene.amrs.find((sceneAmr) => {
@@ -81,5 +103,17 @@ export class MapComponent implements AfterViewInit, OnChanges {
         }
       });
     }
+  }
+  private pointerclick(p: Phaser.Input.Pointer): void {
+    if (this.selectedIconImage) {
+      this.selectedIconImage.destroy();
+    }
+    this.selectedIconImage = this.phaserMapScene.add.image(
+      p.x,
+      p.y,
+      this.selectedIcon
+    );
+
+    this.selectedLocations.emit({ x: p.x, y: p.y });
   }
 }

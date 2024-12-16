@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { AmrMap } from 'src/app/interfaces/map';
 import { MapsService } from 'src/app/services/maps.service';
-import { PpmImage } from '@cs101/ppm-converter';
 import { OverviewService } from 'src/app/services/overview.service';
 import { State } from 'src/app/interfaces/amr';
 @Component({

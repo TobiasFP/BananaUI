@@ -1,0 +1,12 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-searchbar  [debounce]="1000" (ionInput)="searchIcons($event)"></ion-searchbar>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col *ngFor="let icon of searchedIcons" (click)="setIcon(icon)">
+      <ion-icon [name]="icon"></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-grid>

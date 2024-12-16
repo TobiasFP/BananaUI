@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NodeService } from 'src/app/services/node.service';
 import { Node } from '../../interfaces/order';
+import { MapsService } from 'src/app/services/maps.service';
+import { AmrMap } from 'src/app/interfaces/map';
+import { selectedLocation } from '../map/map.component';
+import { ModalController } from '@ionic/angular';
+import { IconsPickerComponent } from '../icons-picker/icons-picker.component';
 
 @Component({
   selector: 'app-node',
@@ -8,7 +13,10 @@ import { Node } from '../../interfaces/order';
   styleUrls: ['./node.component.scss'],
 })
 export class NodeComponent implements OnInit {
-  nodes: Node[] = [];
+  advancedOptions: boolean = false;
+  maps: AmrMap[] = [];
+  pgmbuffer!: Uint8Array;
+  selectedIcon: string = 'contract-outline';
   nodeToPost: Node = {
     nodeId: '',
     sequenceId: 0,
@@ -25,11 +33,17 @@ export class NodeComponent implements OnInit {
       mapDescription: '',
     },
   };
-  constructor(public nodeService: NodeService) {}
+  constructor(
+    public nodeService: NodeService,
+    public mapsService: MapsService,
+    private modalCtrl: ModalController,
+    private changeDetection: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.nodeService.all().subscribe((nodes) => {
-      this.nodes = nodes.data;
+    this.mapsService.all().subscribe((maps) => {
+      this.maps = maps.data;
+      this.mapChange();
     });
   }
 
@@ -37,5 +51,29 @@ export class NodeComponent implements OnInit {
     this.nodeService.create(this.nodeToPost).subscribe((node) => {
       this.nodeToPost = node.data;
     });
+  }
+
+  async mapChange() {
+    this.mapsService.map().subscribe((map) => {
+      this.pgmbuffer = new TextEncoder().encode(map.data);
+      this.changeDetection.detectChanges();
+    });
+  }
+
+  setSelectedLocation($event: selectedLocation) {
+    this.nodeToPost.nodePosition.x = $event.x;
+    this.nodeToPost.nodePosition.y = $event.y;
+  }
+
+  async openSelectIconModal() {
+    const modal = await this.modalCtrl.create({
+      component: IconsPickerComponent,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+    if (role === 'confirm') {
+      this.selectedIcon = data;
+    }
   }
 }

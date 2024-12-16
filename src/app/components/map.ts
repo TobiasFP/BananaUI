@@ -1,5 +1,6 @@
 import { environment } from 'src/environments/environment';
 import { getAmrState, State } from '../interfaces/amr';
+import { ionicons } from 'src/app/interfaces/icons';
 
 export enum ImageNames {
   Map = 'map',
@@ -16,6 +17,7 @@ export default class PhaserScene extends Phaser.Scene {
   amrs: Array<phaserAmr> = [];
   self!: Phaser.Scene;
   metersToAPixel: number;
+  markerIcon: string = '';
 
   constructor(metersToAPixel: number, map: string, amrs: Array<phaserAmr>) {
     super('phaser-map');
@@ -24,15 +26,20 @@ export default class PhaserScene extends Phaser.Scene {
     this.amrs = amrs;
   }
 
-  preload() {
+  async preload() {
     this.load.setBaseURL(environment.baseUrl);
     this.load.image(ImageNames.Map, this.map);
     this.load.image(ImageNames.Amr, 'assets/sprites/amr.png');
+    for (let icon of ionicons) {
+      this.load.svg(icon, 'svg/' + icon + '.svg', {
+        width: 30,
+        height: 30,
+      });
+    }
   }
 
   create() {
     this.add.image(0, 0, ImageNames.Map).setOrigin(0, 0);
-
     // Set meter lines
     const oneMeterXline = this.add
       .line(5, 5, 5 + 1 / 0.05, 5, 5, 5, 0x000000)
