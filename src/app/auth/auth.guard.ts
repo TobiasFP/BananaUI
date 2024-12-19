@@ -8,7 +8,7 @@ import { CanLoad, UrlSegment } from '@angular/router';
 interface resourceUrlRes {
   access_token: string;
   sub: string;
-  groups?: Array<string>;
+  groups?: string[];
   realm_access?: string;
   email: string;
   name: string;

@@ -10,6 +10,7 @@ export class AppComponent {
     { title: 'Bots', url: '/bots', icon: 'navigate-circle' },
     { title: 'Maps', url: '/maps', icon: 'map' },
     { title: 'Tasks', url: '/tasks', icon: 'checkmark-done' },
+    { title: 'Nodes and edges', url: '/nodesandedges', icon: 'compass' },
     { title: 'Options', url: '/options', icon: 'settings' },
   ];
   constructor() {}

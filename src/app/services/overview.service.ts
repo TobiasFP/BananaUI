@@ -13,8 +13,8 @@ export class OverviewService {
   public helloworld(): Observable<string> {
     return this.http.get<string>(environment.apiurl + 'api/helloworld/');
   }
-  public amrs(): Observable<dataExchange<Array<State>>> {
-    return this.http.get<dataExchange<Array<State>>>(
+  public amrs(): Observable<dataExchange<State[]>> {
+    return this.http.get<dataExchange<State[]>>(
       environment.apiurl + 'api/amrs/all'
     );
   }

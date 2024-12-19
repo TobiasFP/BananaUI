@@ -1,8 +1,13 @@
+ion-item {
+  padding: 2%;
+}
 ion-label {
-    padding-right: 10%;
-    max-width: 1000px;
+  text-transform: capitalize;
+  font-weight: bold;
+  padding-top: 3%;
+  padding-right: 10%;
+  max-width: 1000px;
 }
 ion-checkbox {
-    max-width: 1000px;
-
+  max-width: 1000px;
 }

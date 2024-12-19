@@ -16,7 +16,7 @@ export class NodeComponent implements OnInit {
   advancedOptions: boolean = false;
   maps: AmrMap[] = [];
   pgmbuffer!: Uint8Array;
-  selectedIcon: string = 'contract-outline';
+  selectedIcon: string = 'navigate';
   nodeToPost: Node = {
     nodeId: '',
     sequenceId: 0,

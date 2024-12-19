@@ -14,6 +14,7 @@ import * as Phaser from 'phaser';
 import { State } from 'src/app/interfaces/amr';
 import PhaserScene, { phaserAmr } from 'src/app/components/map';
 import { pgmP5Tools } from './pgmP5Tools';
+import { Node } from 'src/app/interfaces/order';
 
 export interface selectedLocation {
   x: number;
@@ -44,7 +45,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
   mapPgmbuffer!: Uint8Array;
   @Input()
   amrs: State[] = [];
-  phaserAmrs: phaserAmr[] = [];
+  @Input()
+  nodes: Node[] = [];
 
   @ViewChild('mapCanvas', { static: false })
   mapCanvas!: ElementRef<HTMLCanvasElement>;
@@ -56,14 +58,14 @@ export class MapComponent implements AfterViewInit, OnChanges {
     const rawPGM = atob(new TextDecoder().decode(this.mapPgmbuffer));
     const pgmInfo = new pgmP5Tools(rawPGM);
     const imageConverter = new PpmImage(rawPGM);
-    this.phaserAmrs = this.amrs;
 
     this.mapSizeY = pgmInfo.getHeight() ?? 0;
     this.mapSizeX = pgmInfo.getWidth() ?? 0;
     this.phaserMapScene = new PhaserScene(
       this.metersToAPixel,
       imageConverter.getPNG(),
-      this.phaserAmrs
+      this.amrs,
+      this.nodes
     );
 
     const config: Phaser.Types.Core.GameConfig = {
@@ -91,7 +93,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (this.phaserMapScene) {
       // if we only want to select location, we do not want this map to display amrs.
-      const amrs = changes['amrs'].currentValue as Array<State>;
+      const amrs = changes['amrs'].currentValue as State[];
       amrs.forEach((amr) => {
         const currentSceneAmr = this.phaserMapScene.amrs.find((sceneAmr) => {
           return amr.ID == sceneAmr.ID;

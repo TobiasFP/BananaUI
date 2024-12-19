@@ -13,8 +13,8 @@ export class NodeService {
   base: string = 'api/nodes';
   constructor(private http: HttpClient) {}
 
-  public all(): Observable<dataExchange<Array<Node>>> {
-    return this.http.get<dataExchange<Array<Node>>>(
+  public all(): Observable<dataExchange<Node[]>> {
+    return this.http.get<dataExchange<Node[]>>(
       environment.apiurl + this.base + '/all'
     );
   }

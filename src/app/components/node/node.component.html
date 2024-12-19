@@ -1,107 +1,112 @@
 <!-- <pre>
   {{ nodes | json }}
 </pre> -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title> <h2>Create a node</h2></ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          Select map
+          <ion-select
+            [(ngModel)]="nodeToPost.nodePosition.mapId"
+            placeholder="Map select"
+          >
+            <ion-select-option *ngFor="let map of maps" [value]="map.mapId">
+              {{ map.mapDescription }} - {{ nodeToPost.nodePosition.mapId }}
+            </ion-select-option>
+          </ion-select>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          Node description
+          <ion-input
+            [counter]="true"
+      
+            type="text"
+            [(ngModel)]="nodeToPost.nodeDescription"
+          >
+          </ion-input>
+        </ion-label>
+      </ion-item>
 
-<ion-list>
-  <ion-item>
-    <ion-select
-      [(ngModel)]="nodeToPost.nodePosition.mapId"
-      placeholder="Map select"
-    >
-      <ion-select-option *ngFor="let map of maps" [value]="map.mapId">
-        {{ map.mapDescription }}
-      </ion-select-option>
-    </ion-select>
-    <ion-input [disabled]="true" label="mapId">
-      {{ nodeToPost.nodePosition.mapId }}
-    </ion-input>
-    <ion-input
-      [disabled]="true"
-      [(ngModel)]="nodeToPost.nodeId"
-      label="Node ID"
-    >
-    </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-input
-      [counter]="true"
-      minlength="3"
-      maxlength="255"
-      type="text"
-      [(ngModel)]="nodeToPost.nodeDescription"
-      label="Node description"
-    >
-    </ion-input>
-  </ion-item>
+      <ion-item>
+        <ion-label>
+          Location x
+          <ion-input
+            type="number"
+            inputmode="numeric"
+            [(ngModel)]="nodeToPost.nodePosition.x"
+            [label]="(nodeToPost.nodePosition.x * 0.05).toFixed(2) + ' m'"
+          >
+          </ion-input>
+        </ion-label>
+        <ion-label>
+          Location y
+          <ion-input
+            type="number"
+            inputmode="numeric"
+            [(ngModel)]="nodeToPost.nodePosition.y"
+            [label]="(nodeToPost.nodePosition.y * 0.05).toFixed(2) + ' m'"
+          >
+          </ion-input>
+        </ion-label>
+      </ion-item>
 
-  <ion-item>
-    <ion-label>
-      {{ (nodeToPost.nodePosition.x * 0.05).toFixed(2) }} [m]
-      <ion-input
-        type="number"
-        inputmode="numeric"
-        [(ngModel)]="nodeToPost.nodePosition.x"
-        label="x [pixels]"
-      >
-      </ion-input>
-    </ion-label>
-    <ion-label>
-      {{ (nodeToPost.nodePosition.y * 0.05).toFixed(2) }} [m]
-      <ion-input
-        type="number"
-        inputmode="numeric"
-        [(ngModel)]="nodeToPost.nodePosition.y"
-        label="y [px]"
-      >
-      </ion-input>
-    </ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-checkbox [(ngModel)]="advancedOptions"> Advanced options</ion-checkbox>
-  </ion-item>
-  <ion-item *ngIf="advancedOptions">
-    <ion-input
-      type="number"
-      inputmode="numeric"
-      [(ngModel)]="nodeToPost.nodePosition.theta"
-      label="theta"
-    >
-    </ion-input>
-  </ion-item>
-  <ion-item *ngIf="advancedOptions">
-    <ion-input
-      type="number"
-      inputmode="numeric"
-      [(ngModel)]="nodeToPost.nodePosition.allowedDeviationXY"
-      label="allowedDeviationXY"
-    >
-    </ion-input>
-  </ion-item>
-  <ion-item *ngIf="advancedOptions">
-    <ion-input
-      type="number"
-      inputmode="numeric"
-      [(ngModel)]="nodeToPost.nodePosition.allowedDeviationTheta"
-      label="allowedDeviationTheta"
-    >
-    </ion-input>
-  </ion-item>
+      <ion-item>
+        <ion-button (click)="openSelectIconModal()"> Select node icon </ion-button>
+        <ion-icon [name]="selectedIcon"></ion-icon>
+      </ion-item>
 
-  <ion-item>
-    <ion-button (click)="openSelectIconModal()"> Select icon </ion-button>
-    <ion-icon [name]="selectedIcon"></ion-icon>
-  </ion-item>
-  <ion-item>
-    <ion-button (click)="addNode()"> Add a node </ion-button>
-  </ion-item>
-</ion-list>
+      <ion-item>
+        <ion-checkbox [(ngModel)]="advancedOptions">
+          Advanced options</ion-checkbox
+        >
+      </ion-item>
+      <ion-item *ngIf="advancedOptions">
+        <ion-input
+          type="number"
+          inputmode="numeric"
+          [(ngModel)]="nodeToPost.nodePosition.theta"
+          label="theta"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item *ngIf="advancedOptions">
+        <ion-input
+          type="number"
+          inputmode="numeric"
+          [(ngModel)]="nodeToPost.nodePosition.allowedDeviationXY"
+          label="allowedDeviationXY"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item *ngIf="advancedOptions">
+        <ion-input
+          type="number"
+          inputmode="numeric"
+          [(ngModel)]="nodeToPost.nodePosition.allowedDeviationTheta"
+          label="allowedDeviationTheta"
+        >
+        </ion-input>
+      </ion-item>
 
-<p>Select location by clicking the image:</p>
-<app-map
-  *ngIf="pgmbuffer"
-  [amrs]="[]"
-  [mapPgmbuffer]="pgmbuffer"
-  [selectLocation]="true"
-  (selectedLocations)="setSelectedLocation($event)"
-  [selectedIcon]="selectedIcon"
-></app-map>
+      <ion-item>
+        <ion-button (click)="addNode()"> Add node </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <p>Select location by clicking the image:</p>
+    <app-map
+      *ngIf="pgmbuffer"
+      [amrs]="[]"
+      [mapPgmbuffer]="pgmbuffer"
+      [selectLocation]="true"
+      (selectedLocations)="setSelectedLocation($event)"
+      [selectedIcon]="selectedIcon"
+    ></app-map>
+  </ion-card-content>
+</ion-card>

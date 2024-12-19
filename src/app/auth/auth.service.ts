@@ -17,12 +17,12 @@ export interface AuthData {
   idtoken?: string;
   userId?: string;
   realm_access?: Roles;
-  groups?: Array<string>;
+  groups?: string[];
   name?: string;
   email?: string;
 }
 interface Roles {
-  roles: Array<String>;
+  roles: String[];
 }
 
 @Injectable({

@@ -16,8 +16,8 @@ export class MapsService {
   public helloworld(): Observable<string> {
     return this.http.get<string>(environment.apiurl + 'api/helloworld/');
   }
-  public all(): Observable<dataExchange<Array<AmrMap>>> {
-    return this.http.get<dataExchange<Array<AmrMap>>>(
+  public all(): Observable<dataExchange<AmrMap[]>> {
+    return this.http.get<dataExchange<AmrMap[]>>(
       environment.apiurl + 'api/maps/all'
     );
   }
