@@ -3,7 +3,7 @@ import { AmrMap } from 'src/app/interfaces/map';
 import { MapsService } from 'src/app/services/maps.service';
 import { OverviewService } from 'src/app/services/overview.service';
 import { State } from 'src/app/interfaces/amr';
-import { Node } from 'src/app/interfaces/order';
+import { Node, NodeMeta } from 'src/app/interfaces/order';
 import { NodeService } from '../../services/node.service';
 @Component({
   selector: 'app-maps',
@@ -12,7 +12,7 @@ import { NodeService } from '../../services/node.service';
 })
 export class MapsPage implements OnInit, OnDestroy {
   amrs: State[] = [];
-  nodes: Node[] = [];
+  nodes: NodeMeta[] = [];
   maps: AmrMap[] = [];
   pgmbuffer!: Uint8Array;
   getAmrsInterval!: any;
@@ -42,7 +42,6 @@ export class MapsPage implements OnInit, OnDestroy {
 
   async getNodes() {
     this.nodeService.all().subscribe((nodes) => {
-      console.log(this.nodes);
       this.nodes = nodes.data;
     });
   }

@@ -5,7 +5,7 @@ import { AuthGuard } from './auth/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'bots',
     pathMatch: 'full',
   },
   {
@@ -54,11 +54,15 @@ const routes: Routes = [
   },
   {
     path: 'amrinfo/:serialnumber',
-    loadChildren: () => import('./pages/amrinfo/amrinfo.module').then( m => m.AmrinfoPageModule)
+    loadChildren: () =>
+      import('./pages/amrinfo/amrinfo.module').then((m) => m.AmrinfoPageModule),
   },
   {
     path: 'nodesandedges',
-    loadChildren: () => import('./pages/nodesandedges/nodesandedges.module').then( m => m.NodesandedgesPageModule)
+    loadChildren: () =>
+      import('./pages/nodesandedges/nodesandedges.module').then(
+        (m) => m.NodesandedgesPageModule
+      ),
   },
 ];
 

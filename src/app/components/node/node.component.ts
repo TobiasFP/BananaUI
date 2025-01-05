@@ -1,11 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NodeService } from 'src/app/services/node.service';
-import { Node } from '../../interfaces/order';
+import { NodeMeta } from '../../interfaces/order';
 import { MapsService } from 'src/app/services/maps.service';
 import { AmrMap } from 'src/app/interfaces/map';
 import { selectedLocation } from '../map/map.component';
 import { ModalController } from '@ionic/angular';
 import { IconsPickerComponent } from '../icons-picker/icons-picker.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-node',
@@ -16,27 +17,31 @@ export class NodeComponent implements OnInit {
   advancedOptions: boolean = false;
   maps: AmrMap[] = [];
   pgmbuffer!: Uint8Array;
-  selectedIcon: string = 'navigate';
-  nodeToPost: Node = {
-    nodeId: '',
-    sequenceId: 0,
-    released: true,
-    actions: [],
-    nodeDescription: '',
-    nodePosition: {
-      x: 0,
-      y: 0,
-      mapId: '99187cd1-8b4b-4f5a-ac11-e455928409de',
-      theta: 0,
-      allowedDeviationXY: 0,
-      allowedDeviationTheta: 0,
-      mapDescription: '',
+  nodeToPost: NodeMeta = 
+  {
+    node: {
+      nodeId: '',
+      sequenceId: 0,
+      released: true,
+      actions: [],
+      nodeDescription: '',
+      nodePosition: {
+        x: 0,
+        y: 0,
+        mapId: '99187cd1-8b4b-4f5a-ac11-e455928409de',
+        theta: 0,
+        allowedDeviationXY: 0,
+        allowedDeviationTheta: 0,
+        mapDescription: '',
+      },
     },
+    icon: ''
   };
   constructor(
     public nodeService: NodeService,
     public mapsService: MapsService,
     private modalCtrl: ModalController,
+    private router: Router,
     private changeDetection: ChangeDetectorRef
   ) {}
 
@@ -50,6 +55,8 @@ export class NodeComponent implements OnInit {
   addNode() {
     this.nodeService.create(this.nodeToPost).subscribe((node) => {
       this.nodeToPost = node.data;
+      this.router.navigate(['/maps']);
+
     });
   }
 
@@ -61,8 +68,8 @@ export class NodeComponent implements OnInit {
   }
 
   setSelectedLocation($event: selectedLocation) {
-    this.nodeToPost.nodePosition.x = $event.x;
-    this.nodeToPost.nodePosition.y = $event.y;
+    this.nodeToPost.node.nodePosition.x = $event.x;
+    this.nodeToPost.node.nodePosition.y = $event.y;
   }
 
   async openSelectIconModal() {
@@ -73,7 +80,7 @@ export class NodeComponent implements OnInit {
 
     const { data, role } = await modal.onWillDismiss();
     if (role === 'confirm') {
-      this.selectedIcon = data;
+      this.nodeToPost.icon = data;
     }
   }
 }

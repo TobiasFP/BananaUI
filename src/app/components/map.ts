@@ -1,7 +1,7 @@
 import { environment } from 'src/environments/environment';
 import { getAmrState, State } from '../interfaces/amr';
 import { ionicons } from 'src/app/interfaces/icons';
-import { Edge, Node } from '../interfaces/order';
+import { Edge, Node, NodeMeta } from '../interfaces/order';
 
 export enum ImageNames {
   Map = 'map',
@@ -10,12 +10,11 @@ export enum ImageNames {
 }
 
 export interface phaserAmr extends State, phaserGameOpject {}
-export interface phaserNode extends Node, phaserGameOpject {}
+export interface phaserNode extends NodeMeta, phaserGameOpject {}
 export interface phaserEdge extends Edge, phaserGameOpject {}
 
 interface phaserGameOpject {
   gameObject?: Phaser.GameObjects.Image;
-  gameTexture?: string;
 }
 
 export default class PhaserScene extends Phaser.Scene {
@@ -27,7 +26,12 @@ export default class PhaserScene extends Phaser.Scene {
   metersToAPixel: number;
   markerIcon: string = '';
 
-  constructor(metersToAPixel: number, map: string, amrs: phaserAmr[], nodes: Node[]) {
+  constructor(
+    metersToAPixel: number,
+    map: string,
+    amrs: phaserAmr[],
+    nodes: NodeMeta[]
+  ) {
     super('phaser-map');
     this.metersToAPixel = metersToAPixel;
     this.map = map;
@@ -61,22 +65,29 @@ export default class PhaserScene extends Phaser.Scene {
     });
 
     // Add Nodes
-    this.nodes.forEach((node) => {
-      this.initiateAmrGameObject(
-        node,
-        node.nodePosition.x,
-        node.nodePosition.y
-      );
+    this.nodes.forEach((nodeMeta) => {
+      this.initiateNodeGameObject(nodeMeta);
     });
     // Add robots
     this.amrs.forEach((amr) => {
-      this.initiateAmrGameObject(amr, amr.agvPosition.x, amr.agvPosition.y);
+      this.initiateAmrGameObject(amr);
     });
   }
 
-  initiateAmrGameObject(amr: phaserGameOpject, x: number, y: number) {
+  initiateAmrGameObject(amr: phaserAmr) {
     amr.gameObject = this.add
-      .image(x, y, ImageNames.Amr)
+      .image(amr.agvPosition.x, amr.agvPosition.y, ImageNames.Amr)
+      .setOrigin(0, 0)
+      .setDisplaySize(30, 30);
+  }
+
+  initiateNodeGameObject(nodeMeta: phaserNode) {
+    nodeMeta.gameObject = this.add
+      .image(
+        nodeMeta.node.nodePosition.x,
+        nodeMeta.node.nodePosition.y,
+        nodeMeta.icon
+      )
       .setOrigin(0, 0)
       .setDisplaySize(30, 30);
   }
@@ -90,7 +101,7 @@ export default class PhaserScene extends Phaser.Scene {
         else if (getAmrState(amr) == 'warning') amr.gameObject.alpha = 0.5;
         else amr.gameObject.alpha = 1;
       } else {
-        this.initiateAmrGameObject(amr, amr.agvPosition.x, amr.agvPosition.y);
+        this.initiateAmrGameObject(amr);
       }
     });
   }

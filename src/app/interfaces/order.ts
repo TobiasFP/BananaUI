@@ -11,6 +11,12 @@ export interface Order {
   zoneSetId: string;
 }
 
+export interface NodeMeta {
+  node: Node;
+  icon: string;
+}
+
+
 export interface Node {
   nodeId: string;
   sequenceId: number;

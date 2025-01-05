@@ -14,7 +14,7 @@ import * as Phaser from 'phaser';
 import { State } from 'src/app/interfaces/amr';
 import PhaserScene, { phaserAmr } from 'src/app/components/map';
 import { pgmP5Tools } from './pgmP5Tools';
-import { Node } from 'src/app/interfaces/order';
+import { Node, NodeMeta } from 'src/app/interfaces/order';
 
 export interface selectedLocation {
   x: number;
@@ -46,7 +46,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
   @Input()
   amrs: State[] = [];
   @Input()
-  nodes: Node[] = [];
+  nodes: NodeMeta[] = [];
 
   @ViewChild('mapCanvas', { static: false })
   mapCanvas!: ElementRef<HTMLCanvasElement>;

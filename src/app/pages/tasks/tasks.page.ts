@@ -9,7 +9,6 @@ export class TasksPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

@@ -1,6 +1,3 @@
-<!-- <pre>
-  {{ nodes | json }}
-</pre> -->
 <ion-card>
   <ion-card-header>
     <ion-card-title> <h2>Create a node</h2></ion-card-title>
@@ -11,11 +8,12 @@
         <ion-label>
           Select map
           <ion-select
-            [(ngModel)]="nodeToPost.nodePosition.mapId"
+            [(ngModel)]="nodeToPost.node.nodePosition.mapId"
             placeholder="Map select"
           >
             <ion-select-option *ngFor="let map of maps" [value]="map.mapId">
-              {{ map.mapDescription }} - {{ nodeToPost.nodePosition.mapId }}
+              {{ map.mapDescription }} -
+              {{ nodeToPost.node.nodePosition.mapId }}
             </ion-select-option>
           </ion-select>
         </ion-label>
@@ -25,12 +23,17 @@
           Node description
           <ion-input
             [counter]="true"
-      
             type="text"
-            [(ngModel)]="nodeToPost.nodeDescription"
+            [(ngModel)]="nodeToPost.node.nodeDescription"
           >
           </ion-input>
         </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-button (click)="openSelectIconModal()">
+          Select node icon
+        </ion-button>
+        <ion-icon [name]="nodeToPost.icon"></ion-icon>
       </ion-item>
 
       <ion-item>
@@ -39,8 +42,8 @@
           <ion-input
             type="number"
             inputmode="numeric"
-            [(ngModel)]="nodeToPost.nodePosition.x"
-            [label]="(nodeToPost.nodePosition.x * 0.05).toFixed(2) + ' m'"
+            [(ngModel)]="nodeToPost.node.nodePosition.x"
+            [label]="(nodeToPost.node.nodePosition.x * 0.05).toFixed(2) + ' m'"
           >
           </ion-input>
         </ion-label>
@@ -49,18 +52,12 @@
           <ion-input
             type="number"
             inputmode="numeric"
-            [(ngModel)]="nodeToPost.nodePosition.y"
-            [label]="(nodeToPost.nodePosition.y * 0.05).toFixed(2) + ' m'"
+            [(ngModel)]="nodeToPost.node.nodePosition.y"
+            [label]="(nodeToPost.node.nodePosition.y * 0.05).toFixed(2) + ' m'"
           >
           </ion-input>
         </ion-label>
       </ion-item>
-
-      <ion-item>
-        <ion-button (click)="openSelectIconModal()"> Select node icon </ion-button>
-        <ion-icon [name]="selectedIcon"></ion-icon>
-      </ion-item>
-
       <ion-item>
         <ion-checkbox [(ngModel)]="advancedOptions">
           Advanced options</ion-checkbox
@@ -70,7 +67,7 @@
         <ion-input
           type="number"
           inputmode="numeric"
-          [(ngModel)]="nodeToPost.nodePosition.theta"
+          [(ngModel)]="nodeToPost.node.nodePosition.theta"
           label="theta"
         >
         </ion-input>
@@ -79,7 +76,7 @@
         <ion-input
           type="number"
           inputmode="numeric"
-          [(ngModel)]="nodeToPost.nodePosition.allowedDeviationXY"
+          [(ngModel)]="nodeToPost.node.nodePosition.allowedDeviationXY"
           label="allowedDeviationXY"
         >
         </ion-input>
@@ -88,7 +85,7 @@
         <ion-input
           type="number"
           inputmode="numeric"
-          [(ngModel)]="nodeToPost.nodePosition.allowedDeviationTheta"
+          [(ngModel)]="nodeToPost.node.nodePosition.allowedDeviationTheta"
           label="allowedDeviationTheta"
         >
         </ion-input>
@@ -106,7 +103,7 @@
       [mapPgmbuffer]="pgmbuffer"
       [selectLocation]="true"
       (selectedLocations)="setSelectedLocation($event)"
-      [selectedIcon]="selectedIcon"
+      [selectedIcon]="nodeToPost.icon"
     ></app-map>
   </ion-card-content>
 </ion-card>
