@@ -37,34 +37,49 @@
 // @import "@ionic/angular/css/palettes/dark.system.css";
 
 ion-grid {
-    --ion-grid-padding: 20px;
+  --ion-grid-padding: 20px;
 
-    --ion-grid-padding-xs: 20px;
-    --ion-grid-padding-sm: 20px;
-    --ion-grid-padding-md: 20px;
-    --ion-grid-padding-lg: 20px;
-    --ion-grid-padding-xl: 20px;
+  --ion-grid-padding-xs: 20px;
+  --ion-grid-padding-sm: 20px;
+  --ion-grid-padding-md: 20px;
+  --ion-grid-padding-lg: 20px;
+  --ion-grid-padding-xl: 20px;
 
-    --ion-grid-column-padding: 30px;
+  --ion-grid-column-padding: 30px;
 
-    --ion-grid-column-padding-xs: 30px;
-    --ion-grid-column-padding-sm: 30px;
-    --ion-grid-column-padding-md: 30px;
-    --ion-grid-column-padding-lg: 30px;
-    --ion-grid-column-padding-xl: 30px;
+  --ion-grid-column-padding-xs: 30px;
+  --ion-grid-column-padding-sm: 30px;
+  --ion-grid-column-padding-md: 30px;
+  --ion-grid-column-padding-lg: 30px;
+  --ion-grid-column-padding-xl: 30px;
 }
 
 ion-row {
-    text-align: center;
+  text-align: center;
 }
 .row-header {
-    text-transform: uppercase;
-    size: 1.2em;
+  text-transform: uppercase;
+  size: 1.2em;
 }
 
 ion-row:nth-child(odd) {
-    background-color: var(--ion-color-light-shade);
+  background-color: var(--ion-color-light-shade);
 }
 ion-row:nth-child(even) {
-    background-color: var(--ion-color-light-tint);
+  background-color: var(--ion-color-light-tint);
+}
+
+ion-modal.creater-modal::part(content) {
+  --height: 90%;
+  position: absolute;
+  top: 5%;
+  --width: 70%;
+  border-radius: 25px;
+  display: block;
+}
+
+
+.tool-ribbon {
+  background: linear-gradient(to right, var(--ion-color-primary), transparent);
+  color:white;
 }

@@ -9,18 +9,20 @@ import { dataExchange } from '../interfaces/dataexchange';
   providedIn: 'root',
 })
 export class OverviewService {
+  base: string = 'api/v1/amrs';
+
   constructor(private http: HttpClient) {}
   public helloworld(): Observable<string> {
     return this.http.get<string>(environment.apiurl + 'api/helloworld/');
   }
   public amrs(): Observable<dataExchange<State[]>> {
     return this.http.get<dataExchange<State[]>>(
-      environment.apiurl + 'api/amrs/all'
+      environment.apiurl + this.base + '/all'
     );
   }
   public amr(serialNumber: string): Observable<dataExchange<State>> {
     return this.http.get<dataExchange<State>>(
-      environment.apiurl + 'api/amrs/info?SN=' + serialNumber
+      environment.apiurl + this.base + '/info?SN=' + serialNumber
     );
   }
 }

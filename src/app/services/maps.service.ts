@@ -12,18 +12,19 @@ import { AmrMap } from '../interfaces/map';
   providedIn: 'root',
 })
 export class MapsService {
+  base: string = 'api/v1/maps';
   constructor(private http: HttpClient) {}
   public helloworld(): Observable<string> {
     return this.http.get<string>(environment.apiurl + 'api/helloworld/');
   }
   public all(): Observable<dataExchange<AmrMap[]>> {
     return this.http.get<dataExchange<AmrMap[]>>(
-      environment.apiurl + 'api/maps/all'
+      environment.apiurl + this.base + '/all'
     );
   }
   public map(): Observable<dataExchange<string>> {
     return this.http.get<dataExchange<string>>(
-      environment.apiurl + 'api/maps/map'
+      environment.apiurl + this.base + '/map'
     );
   }
 }

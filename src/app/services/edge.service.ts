@@ -10,7 +10,7 @@ import { Edge, Node } from '../interfaces/order';
   providedIn: 'root',
 })
 export class NodeService {
-  base: string = 'api/edge';
+  base: string = 'api/v1/edge';
   constructor(private http: HttpClient) {}
 
   public all(): Observable<dataExchange<Edge[]>> {

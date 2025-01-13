@@ -10,7 +10,7 @@ import { Node, NodeMeta } from '../interfaces/order';
   providedIn: 'root',
 })
 export class NodeService {
-  base: string = 'api/nodes';
+  base: string = 'api/v1/nodes';
   constructor(private http: HttpClient) {}
 
   public all(): Observable<dataExchange<NodeMeta[]>> {

@@ -11,11 +11,16 @@ export interface Order {
   zoneSetId: string;
 }
 
+export interface OrderTemplateDetails {
+  name: string;
+  order: Order;
+  nodeIds: string[];
+}
+
 export interface NodeMeta {
   node: Node;
   icon: string;
 }
-
 
 export interface Node {
   nodeId: string;

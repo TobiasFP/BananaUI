@@ -57,13 +57,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/amrinfo/amrinfo.module').then((m) => m.AmrinfoPageModule),
   },
-  {
-    path: 'nodesandedges',
-    loadChildren: () =>
-      import('./pages/nodesandedges/nodesandedges.module').then(
-        (m) => m.NodesandedgesPageModule
-      ),
-  },
 ];
 
 @NgModule({

@@ -5,6 +5,8 @@ import { OverviewService } from 'src/app/services/overview.service';
 import { State } from 'src/app/interfaces/amr';
 import { Node, NodeMeta } from 'src/app/interfaces/order';
 import { NodeService } from '../../services/node.service';
+import { NodeComponent } from 'src/app/components/node/node.component';
+import { ModalController } from '@ionic/angular';
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.page.html',
@@ -20,6 +22,7 @@ export class MapsPage implements OnInit, OnDestroy {
     public mapsService: MapsService,
     public overviewService: OverviewService,
     public nodeService: NodeService,
+    private modalCtrl: ModalController,
     private changeDetection: ChangeDetectorRef
   ) {}
 
@@ -57,5 +60,24 @@ export class MapsPage implements OnInit, OnDestroy {
       this.changeDetection.detectChanges();
     });
     await this.getAmrs();
+  }
+
+  async openCreateNodeTemplateModal() {
+    const modal = await this.modalCtrl.create({
+      component: NodeComponent,
+      cssClass: 'creater-modal',
+      componentProps: { isModal: true },
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      console.log("Yiiisss");
+      await this.getNodes();
+      this.pgmbuffer = new Uint8Array();
+      this.mapChange();
+      
+    }
   }
 }

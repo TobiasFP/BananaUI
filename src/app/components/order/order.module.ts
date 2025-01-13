@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { OrderComponent } from './order.component';
 import { MapModule } from '../map/map.module';
 import { IconsPickerModule } from '../icons-picker/icons-picker.module';
-
+import { NodeModule } from '../node/node.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +15,7 @@ import { IconsPickerModule } from '../icons-picker/icons-picker.module';
     IonicModule,
     MapModule,
     IconsPickerModule,
+    NodeModule,
   ],
   declarations: [OrderComponent],
   exports: [OrderComponent],

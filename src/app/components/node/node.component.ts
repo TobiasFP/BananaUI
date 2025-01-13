@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { NodeService } from 'src/app/services/node.service';
 import { NodeMeta } from '../../interfaces/order';
 import { MapsService } from 'src/app/services/maps.service';
 import { AmrMap } from 'src/app/interfaces/map';
 import { selectedLocation } from '../map/map.component';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { IconsPickerComponent } from '../icons-picker/icons-picker.component';
 import { Router } from '@angular/router';
 
@@ -14,11 +14,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./node.component.scss'],
 })
 export class NodeComponent implements OnInit {
+  @Input()
+  isModal: boolean = false;
   advancedOptions: boolean = false;
   maps: AmrMap[] = [];
   pgmbuffer!: Uint8Array;
-  nodeToPost: NodeMeta = 
-  {
+  nodeToPost: NodeMeta = {
     node: {
       nodeId: '',
       sequenceId: 0,
@@ -35,14 +36,15 @@ export class NodeComponent implements OnInit {
         mapDescription: '',
       },
     },
-    icon: ''
+    icon: '',
   };
   constructor(
     public nodeService: NodeService,
     public mapsService: MapsService,
     private modalCtrl: ModalController,
     private router: Router,
-    private changeDetection: ChangeDetectorRef
+    private changeDetection: ChangeDetectorRef,
+    private loadingCtrl: LoadingController
   ) {}
 
   ngOnInit() {
@@ -52,11 +54,35 @@ export class NodeComponent implements OnInit {
     });
   }
 
-  addNode() {
-    this.nodeService.create(this.nodeToPost).subscribe((node) => {
-      this.nodeToPost = node.data;
-      this.router.navigate(['/maps']);
+  async addNode() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Creating a node',
+      backdropDismiss: true,
+    });
 
+    loading.present();
+
+    this.nodeService.create(this.nodeToPost).subscribe({
+      next: () => {
+        loading.dismiss();
+        if (this.isModal) {
+          return this.modalCtrl.dismiss('', 'confirm');
+        } else {
+          this.router.navigate(['/maps']);
+        }
+        return;
+      },
+      error: (e) => {
+        loading.dismiss();
+        this.loadingCtrl.create({
+          message: e,
+          backdropDismiss: true,
+        });
+        if (this.isModal) {
+          return this.modalCtrl.dismiss(null, 'cancel');
+        }
+        return;
+      },
     });
   }
 
