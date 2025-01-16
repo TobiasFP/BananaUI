@@ -29,7 +29,7 @@
           <ion-col size="2"> {{ order.order.timestamp }} </ion-col>
           <ion-col size="2"> {{ order.order.zoneSetId }} </ion-col>
           <ion-col size="6">
-            <ion-button>To any robot</ion-button>
+            <ion-button (click)="AssignToAnyRobot(order.ID)">To any robot</ion-button>
 
             <ion-button>To robot by manufacturer</ion-button>
 

@@ -1,3 +1,6 @@
+export interface assignOrder {
+  id: number;
+}
 export interface Order {
   headerId: number;
   timestamp: string;
@@ -12,6 +15,7 @@ export interface Order {
 }
 
 export interface OrderTemplateDetails {
+  ID: number;
   name: string;
   order: Order;
   nodeIds: string[];

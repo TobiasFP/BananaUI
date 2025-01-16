@@ -18,6 +18,7 @@ import { NodeComponent } from '../node/node.component';
 export class OrderComponent implements OnInit {
   nodes: NodeMeta[] = [];
   order: OrderTemplateDetails = {
+    ID: 0,
     name: '',
     order: {
       headerId: 0,

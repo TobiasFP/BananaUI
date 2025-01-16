@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { dataExchange } from '../interfaces/dataexchange';
-import {  Order, OrderTemplateDetails } from '../interfaces/order';
+import {  assignOrder, Order, OrderTemplateDetails } from '../interfaces/order';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +23,14 @@ export class OrderService {
     return this.http.post<dataExchange<OrderTemplateDetails>>(
       environment.apiurl + this.base + '/',
       order
+    );
+  }
+  
+
+  public assign(id: assignOrder): Observable<dataExchange<OrderTemplateDetails>> {
+    return this.http.post<dataExchange<OrderTemplateDetails>>(
+      environment.apiurl + this.base + '/assign',
+      id
     );
   }
 }

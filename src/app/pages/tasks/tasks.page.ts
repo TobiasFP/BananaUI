@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { OrderComponent } from 'src/app/components/order/order.component';
 import { OrderTemplateDetails } from 'src/app/interfaces/order';
 import { OrderService } from 'src/app/services/order.service';
-
+import { assignOrder } from 'src/app/interfaces/order';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.page.html',
@@ -39,5 +39,14 @@ export class TasksPage implements OnInit {
     if (role === 'confirm') {
       this.getAllOrderTemplates();
     }
+  }
+
+  AssignToAnyRobot(orderId: number) {
+    let assignOrder: assignOrder = {
+      id: orderId
+    }
+    this.orderService.assign(assignOrder).subscribe((orderConfirmation) => {
+      console.log(orderConfirmation);
+    })
   }
 }
