@@ -7,6 +7,7 @@ import { Node, NodeMeta } from 'src/app/interfaces/order';
 import { NodeService } from '../../services/node.service';
 import { NodeComponent } from 'src/app/components/node/node.component';
 import { ModalController } from '@ionic/angular';
+import { MapUploadComponentComponent } from 'src/app/components/map-upload-component/map-upload-component.component';
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.page.html',
@@ -15,7 +16,14 @@ import { ModalController } from '@ionic/angular';
 export class MapsPage implements OnInit, OnDestroy {
   amrs: State[] = [];
   nodes: NodeMeta[] = [];
-  maps: AmrMap[] = [];
+  maps: AmrMap[] = [
+    {
+      ID: 0,
+      mapVersion: '',
+      mapStatus: '',
+      mapDescription: 'test',
+    },
+  ];
   pgmbuffer!: Uint8Array;
   getAmrsInterval!: any;
   constructor(
@@ -29,8 +37,10 @@ export class MapsPage implements OnInit, OnDestroy {
   async ngOnInit() {
     await this.getNodes();
     await this.mapsService.all().subscribe(async (maps) => {
-      this.maps = maps.data;
-      await this.mapChange();
+      if (maps.data.length > 0) {
+        this.maps = maps.data;
+        await this.mapChange();
+      }
       this.changeDetection.detectChanges();
     });
     this.getAmrsInterval = setInterval(async () => {
@@ -55,7 +65,8 @@ export class MapsPage implements OnInit, OnDestroy {
   }
 
   async mapChange() {
-    this.mapsService.map().subscribe((map) => {
+    const mapId = this.maps[0].mapId ?? '';
+    this.mapsService.map(mapId).subscribe((map) => {
       this.pgmbuffer = new TextEncoder().encode(map.data);
       this.changeDetection.detectChanges();
     });
@@ -73,11 +84,27 @@ export class MapsPage implements OnInit, OnDestroy {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      console.log("Yiiisss");
       await this.getNodes();
       this.pgmbuffer = new Uint8Array();
       this.mapChange();
-      
+    }
+  }
+
+  async openAddMapModal() {
+    const modal = await this.modalCtrl.create({
+      component: MapUploadComponentComponent,
+      cssClass: 'creater-modal',
+      componentProps: { isModal: true },
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      console.log('Yiiisss');
+      await this.getNodes();
+      this.pgmbuffer = new Uint8Array();
+      this.mapChange();
     }
   }
 }

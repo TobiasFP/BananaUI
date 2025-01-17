@@ -10,12 +10,12 @@
       <ion-title size="large"></ion-title>
     </ion-toolbar>
   </ion-header>
-    <ion-card *ngIf="pgmbuffer">
+    <ion-card>
       <ion-card-content>
         <ion-grid>
           <ion-row class="tool-ribbon">
             <ion-col size="2">
-              <ion-button> Add map </ion-button>
+              <ion-button (click)="openAddMapModal()"> Add map </ion-button>
             </ion-col>
             <ion-col size="2">
               <ion-button> Assign task </ion-button>
@@ -44,7 +44,7 @@
               </ion-select>
             </ion-col>
           </ion-row>
-          <ion-row>
+          <ion-row *ngIf="pgmbuffer">
             <ion-col size="12">
               <app-map
                 [amrs]="amrs"

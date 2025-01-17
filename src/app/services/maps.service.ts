@@ -6,8 +6,6 @@ import { Observable } from 'rxjs';
 import { dataExchange } from '../interfaces/dataexchange';
 import { AmrMap } from '../interfaces/map';
 
-
-
 @Injectable({
   providedIn: 'root',
 })
@@ -22,9 +20,17 @@ export class MapsService {
       environment.apiurl + this.base + '/all'
     );
   }
-  public map(): Observable<dataExchange<string>> {
+  public map(id: string): Observable<dataExchange<string>> {
     return this.http.get<dataExchange<string>>(
-      environment.apiurl + this.base + '/map'
+      environment.apiurl + this.base + '/' + id
+    );
+  }
+
+  // In order to upload a file, using FormData is much simpler.
+  public Add(amrMap: FormData): Observable<dataExchange<AmrMap>> {
+    return this.http.post<dataExchange<AmrMap>>(
+      environment.apiurl + this.base + '/',
+      amrMap
     );
   }
 }

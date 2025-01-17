@@ -8,6 +8,7 @@ import { MapsPageRoutingModule } from './maps-routing.module';
 
 import { MapsPage } from './maps.page';
 import { MapModule } from 'src/app/components/map/map.module';
+import { MapUploadComponentModule } from '../../components/map-upload-component/map-upload-component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { MapModule } from 'src/app/components/map/map.module';
     FormsModule,
     IonicModule,
     MapsPageRoutingModule,
-    MapModule
+    MapModule,
+    MapUploadComponentModule
   ],
   declarations: [MapsPage],
 })

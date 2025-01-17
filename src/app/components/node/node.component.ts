@@ -87,7 +87,8 @@ export class NodeComponent implements OnInit {
   }
 
   async mapChange() {
-    this.mapsService.map().subscribe((map) => {
+    const mapId = this.maps[0].mapId ?? '';
+    this.mapsService.map(mapId).subscribe((map) => {
       this.pgmbuffer = new TextEncoder().encode(map.data);
       this.changeDetection.detectChanges();
     });
