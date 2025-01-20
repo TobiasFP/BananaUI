@@ -47,6 +47,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
   amrs: State[] = [];
   @Input()
   nodes: NodeMeta[] = [];
+  @Input()
+  reload: boolean = false;
 
   @ViewChild('mapCanvas', { static: false })
   mapCanvas!: ElementRef<HTMLCanvasElement>;
@@ -91,10 +93,20 @@ export class MapComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (
+      this.game &&
+      changes['reload'] &&
+      changes['reload'].currentValue == true
+    ) {
+      this.game.destroy(false);
+      setTimeout(() => {
+        this.ngAfterViewInit();
+      }, 300);
+    }
     if (this.phaserMapScene) {
       // if we only want to select location, we do not want this map to display amrs.
-      const amrs = changes['amrs'].currentValue as State[];
-      amrs.forEach((amr) => {
+      const amrs = changes['amrs']?.currentValue ?? ([] as State[]);
+      amrs.forEach((amr: phaserAmr) => {
         const currentSceneAmr = this.phaserMapScene.amrs.find((sceneAmr) => {
           return amr.ID == sceneAmr.ID;
         });

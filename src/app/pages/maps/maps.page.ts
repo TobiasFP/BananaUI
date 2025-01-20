@@ -26,6 +26,8 @@ export class MapsPage implements OnInit, OnDestroy {
   ];
   pgmbuffer!: Uint8Array;
   getAmrsInterval!: any;
+  mapID: string = '';
+  reloadMap: boolean = false;
   constructor(
     public mapsService: MapsService,
     public overviewService: OverviewService,
@@ -35,10 +37,12 @@ export class MapsPage implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit() {
-    await this.getNodes();
     await this.mapsService.all().subscribe(async (maps) => {
-      if (maps.data.length > 0) {
+      if (maps.data.length > 0 && maps.data[0].mapId) {
         this.maps = maps.data;
+        this.mapID = maps.data[0].mapId;
+
+        await this.getNodes(maps.data[0].mapId);
         await this.mapChange();
       }
       this.changeDetection.detectChanges();
@@ -53,21 +57,24 @@ export class MapsPage implements OnInit, OnDestroy {
     clearInterval(this.getAmrsInterval);
   }
 
-  async getNodes() {
-    this.nodeService.all().subscribe((nodes) => {
+  async getNodes(mapId: string) {
+    this.nodeService.all(mapId).subscribe((nodes) => {
       this.nodes = nodes.data;
     });
   }
   async getAmrs() {
-    this.overviewService.amrs().subscribe((amrs) => {
+    await this.overviewService.amrs().subscribe((amrs) => {
       this.amrs = amrs.data;
     });
   }
 
   async mapChange() {
-    const mapId = this.maps[0].mapId ?? '';
+    this.reloadMap = false;
+    const mapId = this.mapID; 
+    await this.getNodes(mapId);
     this.mapsService.map(mapId).subscribe((map) => {
       this.pgmbuffer = new TextEncoder().encode(map.data);
+      this.reloadMap = true ;
       this.changeDetection.detectChanges();
     });
     await this.getAmrs();
@@ -84,7 +91,8 @@ export class MapsPage implements OnInit, OnDestroy {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      await this.getNodes();
+      await this.getNodes('');
+
       this.pgmbuffer = new Uint8Array();
       this.mapChange();
     }
@@ -101,8 +109,6 @@ export class MapsPage implements OnInit, OnDestroy {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      console.log('Yiiisss');
-      await this.getNodes();
       this.pgmbuffer = new Uint8Array();
       this.mapChange();
     }

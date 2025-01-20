@@ -37,8 +37,10 @@
                 (ionChange)="mapChange()"
                 label="Select map to view"
                 placeholder="Map"
+                [(ngModel)]="mapID"
+
               >
-                <ion-select-option *ngFor="let map of maps" [value]="map.ID">
+                <ion-select-option *ngFor="let map of maps" [value]="map.mapId">
                   {{ map.mapDescription }}
                 </ion-select-option>
               </ion-select>
@@ -50,6 +52,7 @@
                 [amrs]="amrs"
                 [nodes]="nodes"
                 [mapPgmbuffer]="pgmbuffer"
+                [reload]="reloadMap"
               ></app-map>
             </ion-col>
           </ion-row>
