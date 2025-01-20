@@ -11,6 +11,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { NodeComponent } from '../node/node.component';
 
 @Component({
+  standalone: false,
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss'],

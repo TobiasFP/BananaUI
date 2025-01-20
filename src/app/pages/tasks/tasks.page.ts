@@ -5,6 +5,7 @@ import { OrderTemplateDetails } from 'src/app/interfaces/order';
 import { OrderService } from 'src/app/services/order.service';
 import { assignOrder } from 'src/app/interfaces/order';
 @Component({
+  standalone: false,
   selector: 'app-tasks',
   templateUrl: './tasks.page.html',
   styleUrls: ['./tasks.page.scss'],

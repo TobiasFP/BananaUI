@@ -21,6 +21,7 @@ export interface selectedLocation {
   y: number;
 }
 @Component({
+  standalone: false,
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],

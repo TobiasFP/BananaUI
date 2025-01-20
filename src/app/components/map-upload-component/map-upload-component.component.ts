@@ -4,6 +4,7 @@ import { AmrMapData } from '../../interfaces/map';
 import { MapsService } from 'src/app/services/maps.service';
 
 @Component({
+  standalone: false,
   selector: 'app-map-upload-component',
   templateUrl: './map-upload-component.component.html',
   styleUrls: ['./map-upload-component.component.scss'],

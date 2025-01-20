@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
+  standalone: false,
   selector: 'app-callback',
   templateUrl: './callback.page.html',
   styleUrls: ['./callback.page.scss'],

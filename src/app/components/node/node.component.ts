@@ -9,6 +9,7 @@ import { IconsPickerComponent } from '../icons-picker/icons-picker.component';
 import { Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-node',
   templateUrl: './node.component.html',
   styleUrls: ['./node.component.scss'],

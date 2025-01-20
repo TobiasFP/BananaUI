@@ -4,6 +4,7 @@ import { getAmrState as getStateOfAmr, State } from 'src/app/interfaces/amr';
 import { OverviewService } from 'src/app/services/overview.service';
 
 @Component({
+  standalone: false,
   selector: 'app-bots',
   templateUrl: './bots.page.html',
   styleUrls: ['./bots.page.scss'],

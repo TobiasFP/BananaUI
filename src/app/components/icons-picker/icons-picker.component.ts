@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { ionicons } from 'src/app/interfaces/icons';
 
 @Component({
+  standalone: false,
   selector: 'app-icons-picker',
   templateUrl: './icons-picker.component.html',
   styleUrls: ['./icons-picker.component.scss'],

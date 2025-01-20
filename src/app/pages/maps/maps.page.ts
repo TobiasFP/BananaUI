@@ -9,6 +9,7 @@ import { NodeComponent } from 'src/app/components/node/node.component';
 import { ModalController } from '@ionic/angular';
 import { MapUploadComponentComponent } from 'src/app/components/map-upload-component/map-upload-component.component';
 @Component({
+  standalone: false,
   selector: 'app-maps',
   templateUrl: './maps.page.html',
   styleUrls: ['./maps.page.scss'],
