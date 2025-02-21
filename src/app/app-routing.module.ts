@@ -56,6 +56,14 @@ const routes: Routes = [
     path: 'amrinfo/:serialnumber',
     loadChildren: () =>
       import('./pages/amrinfo/amrinfo.module').then((m) => m.AmrinfoPageModule),
+    canLoad: [AuthGuard],
+
+  },
+  {
+    path: 'actions',
+    loadChildren: () => import('./pages/actions/actions.module').then( m => m.ActionsPageModule),
+    canLoad: [AuthGuard],
+
   },
 ];
 

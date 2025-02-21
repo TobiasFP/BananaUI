@@ -43,6 +43,15 @@ export interface Action {
   actionParameters: ActionParameter[];
 }
 
+export interface InstantAction {
+  HeaderID: number;
+  Timestamp: string;
+  Version: string;
+  Manufacturer: string;
+  SerialNumber: string;
+  Actions: Action[];
+}
+
 export interface ActionParameter {
   key: string;
   value: any;
