@@ -65,11 +65,11 @@ export default class PhaserScene extends Phaser.Scene {
     });
 
     // Add Nodes
-    this.nodes.forEach((nodeMeta) => {
+    this.nodes?.forEach((nodeMeta) => {
       this.initiateNodeGameObject(nodeMeta);
     });
     // Add robots
-    this.amrs.forEach((amr) => {
+    this.amrs?.forEach((amr) => {
       this.initiateAmrGameObject(amr);
     });
   }
