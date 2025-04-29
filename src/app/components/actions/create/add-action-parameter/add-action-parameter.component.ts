@@ -14,6 +14,7 @@ import { ActionService } from 'src/app/services/action.service';
 })
 export class AddActionParameterComponent implements OnInit {
   actionParameterToPost: ActionParameter = { key: '', value: '' };
+  actionParametertype: string = 'text';
 
   @Output() actionParameter: EventEmitter<ActionParameter> =
     new EventEmitter();

@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>actions</ion-title>
+    <ion-title>Actions and parameters</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,5 +10,25 @@
       <ion-title size="large">actions</ion-title>
     </ion-toolbar>
   </ion-header>
-  <app-action-parameter></app-action-parameter>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6"> Prebuilt actions </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <app-prebuilt-actions></app-prebuilt-actions>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6"> Action builder </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6"> Action parameters </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <app-action-parameter></app-action-parameter>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -8,6 +8,7 @@ import { ActionsPageRoutingModule } from './actions-routing.module';
 
 import { ActionsPage } from './actions.page';
 import { ActionParameterComponent } from 'src/app/components/actions/action-parameter/action-parameter.component';
+import { PrebuiltActionsComponent } from 'src/app/components/actions/list/prebuilt-actions/prebuilt-actions.component';
 
 
 
@@ -17,7 +18,8 @@ import { ActionParameterComponent } from 'src/app/components/actions/action-para
     FormsModule,
     IonicModule,
     ActionsPageRoutingModule,
-    ActionParameterComponent
+    ActionParameterComponent,
+    PrebuiltActionsComponent
   ],
   declarations: [ActionsPage]
 })

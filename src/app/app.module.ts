@@ -39,6 +39,7 @@ export class AppModule {
     const apm = service.init({
       serviceName: 'BANANAUI',
       serverUrl: 'http://localhost:8200',
+      environment: 'development',
     });
   }
 }

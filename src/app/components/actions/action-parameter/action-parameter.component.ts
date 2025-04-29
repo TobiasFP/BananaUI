@@ -22,12 +22,12 @@ import { ActionParameter } from 'src/app/interfaces/order';
 })
 export class ActionParameterComponent implements OnInit {
   actionParameters: ActionParameter[] = [];
-
   constructor(private actionService: ActionService) {}
 
   ngOnInit() {
     this.actionService.allActionParameters().subscribe((actionParameters) => {
       this.actionParameters = actionParameters.data;
+      console.log(this.actionParameters);
     });
   }
 }

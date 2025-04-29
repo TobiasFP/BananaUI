@@ -1,21 +1,29 @@
+<h2> Create an action parameter</h2>
 <ion-grid>
   <ion-row>
-    <ion-col size="5">
+    <ion-col size="4">
       <ion-input
-        label="key"
+        label="Action parameter key"
         labelPlacement="stacked"
-        placeholder="Key"
+        placeholder=""
         [(ngModel)]="actionParameterToPost.key"
       ></ion-input>
     </ion-col>
-    <ion-col size="5">
+    <ion-col size="4">
       <ion-input
-        label="value"
+        label="Action parameter value"
         labelPlacement="stacked"
-        placeholder="Value"
+        placeholder=""
+        type="{{actionParametertype}}"
         [(ngModel)]="actionParameterToPost.value"
       ></ion-input>
     </ion-col>
+    <ion-col size="2">
+      <ion-select label="Value type" placeholder="string" [(ngModel)]="actionParametertype">
+        <ion-select-option value="text">string</ion-select-option>
+        <ion-select-option value="number">number</ion-select-option>
+       </ion-select>
+      </ion-col>
     <ion-col size="2">
       <ion-button (click)="addActionParameter()"> Add </ion-button>
     </ion-col>

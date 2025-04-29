@@ -1,2 +1,12 @@
-<app-action-parameter-list (actionParameters)="actionParameters"></app-action-parameter-list>
-<app-add-action-parameter></app-add-action-parameter>
+<ion-card *ngIf="actionParameters.length > 0">
+  <ion-card-content>
+    <app-action-parameter-list
+      [actionParameters]="actionParameters"
+    ></app-action-parameter-list>
+  </ion-card-content>
+</ion-card>
+<ion-card>
+  <ion-card-content>
+    <app-add-action-parameter></app-add-action-parameter>
+  </ion-card-content>
+</ion-card>

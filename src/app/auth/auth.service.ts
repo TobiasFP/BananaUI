@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 export interface AuthResponseData {
@@ -96,7 +96,7 @@ export class AuthService {
   public storeAuthData(
     data: AuthData
   ): Observable<boolean> {
-    Storage.set({ key: 'authData', value: JSON.stringify(data) });
+    Preferences.set({ key: 'authData', value: JSON.stringify(data) });
     return of(true);
   }
 
@@ -124,7 +124,7 @@ export class AuthService {
           refreshtoken: '',
           expires: 0
     };
-    return Storage.get({ key: 'authData' }).then(
+    return Preferences.get({ key: 'authData' }).then(
       (storedData: { value: any }) => {
         if (!storedData?.value) {
           return nullAuthData;
